@@ -1,6 +1,7 @@
 from autogen import AssistantAgent
 import os
 from groq import Groq
+import json
 
 
 userData = {
@@ -23,4 +24,7 @@ chat_completion = client.chat.completions.create(
     model=userData.get("llm_name"),
 )
 
-print(chat_completion)
+
+parsed_json = json.loads(chat_completion.json())
+finish_reason = parsed_json['choices'][0]['message']['content']
+print(finish_reason)
